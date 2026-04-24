@@ -1059,8 +1059,22 @@
                 grid-column: span 1;
                 grid-template-columns: 1fr;
             }
-            .skills-grid {
+                        .skills-grid {
                 grid-template-columns: 1fr 1fr;
+                border: none;
+            }
+            .skill-group {
+                padding: 1.5rem 1rem;
+                border: 1px solid var(--line);
+                margin: 0;
+            }
+                        .skill-list li {
+                font-size: 0.82rem;
+                gap: 0.4rem;
+            }
+            .skill-list li::before {
+                width: 5px;
+                height: 5px;
             }
             .skill-group:nth-child(3n) {
                 border-right: 1px solid var(--line);
