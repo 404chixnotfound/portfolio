@@ -26,8 +26,6 @@
             --accent-glow: rgba(200, 75, 49, 0.25);
             --line: rgba(24, 22, 20, 0.12);
             --line-strong: rgba(24, 22, 20, 0.18);
-            --card-hover-bg: #181614;
-            --card-hover-text: #F5F3EE;
             --hero-bg-number: rgba(24, 22, 20, 0.035);
             --skill-dot: #181614;
             --skill-dot-dim: #6B6560;
@@ -53,8 +51,6 @@
             --accent-glow: rgba(232, 103, 65, 0.3);
             --line: rgba(232, 228, 221, 0.1);
             --line-strong: rgba(232, 228, 221, 0.16);
-            --card-hover-bg: #e8e4dd;
-            --card-hover-text: #121110;
             --hero-bg-number: rgba(232, 228, 221, 0.025);
             --skill-dot: #e8e4dd;
             --skill-dot-dim: #9e9890;
@@ -531,26 +527,13 @@
             cursor: none;
         }
         .project-card:hover {
-            background: var(--card-hover-bg);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1.5px var(--accent), 0 20px 50px rgba(0, 0, 0, 0.12);
             transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
             z-index: 2;
         }
         [data-theme="dark"] .project-card:hover {
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-        .project-card:hover .project-title,
-        .project-card:hover .project-desc,
-        .project-card:hover .project-num {
-            color: var(--card-hover-text);
-        }
-        .project-card:hover .project-tags span {
-            border-color: rgba(245, 243, 238, 0.3);
-            color: rgba(245, 243, 238, 0.6);
-        }
-        [data-theme="dark"] .project-card:hover .project-tags span {
-            border-color: rgba(18, 17, 16, 0.35);
-            color: rgba(18, 17, 16, 0.6);
+            box-shadow: 0 0 0 1.5px var(--accent), 0 20px 50px rgba(0, 0, 0, 0.45);
         }
         .project-card:hover .project-link {
             opacity: 1;
@@ -562,9 +545,6 @@
             letter-spacing: 0.1em;
             margin-bottom: 1.5rem;
             transition: color 0.3s ease;
-        }
-        .project-card:hover .project-num {
-            color: var(--accent);
         }
         .project-title {
             font-family: var(--sans);
@@ -723,12 +703,6 @@
             left: 0;
             color: var(--neon);
             font-weight: 700;
-        }
-        .project-card:hover .project-features li {
-            color: rgba(245, 243, 238, 0.75);
-        }
-        [data-theme="dark"] .project-card:hover .project-features li {
-            color: rgba(18, 17, 16, 0.75);
         }
         .project-tags span.neon-tag {
             border-color: var(--neon);
@@ -1454,6 +1428,9 @@
                 and interesting collaborations.
             </p>
             <div class="contact-links">
+                <a href="mailto:chixemmy@gmail.com" class="contact-link">
+                    chixemmy@gmail.com <span>→</span>
+                </a>
                 <a href="https://github.com/404chixnotfound" target="_blank" class="contact-link">
                     GitHub <span>↗</span>
                 </a>
