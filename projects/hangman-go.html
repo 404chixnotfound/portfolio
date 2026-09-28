@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HangMan GO! — Chix.dev</title>
+    <meta name="description" content="A 2D indie educational game that brings the classic pen-and-paper word-guessing game behind the screen." />
+    <meta property="og:title" content="HangMan GO! — Chix.dev" /><meta property="og:description" content="A 2D indie educational game that brings the classic pen-and-paper word-guessing game behind the screen." />
+    <meta property="og:image" content="https://www.chix-dev.name.ng/image/og.jpg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" /><link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#E8813A" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <script>try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+    <link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body class="detail" style="--c:#E8813A">
+    <div class="cursor" id="cursor"><div class="cursor-ring" id="cursorRing"></div><div class="cursor-dot" id="cursorDot"></div></div>
+    <nav id="navbar" class="scrolled">
+        <a href="../index.html" class="nav-logo">Chix<span>.</span>dev</a>
+        <div class="nav-inner">
+            <ul class="nav-links">
+                <li><a href="../index.html#about">About</a></li><li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#skills">Skills</a></li><li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="theme-toggle-thumb"></span></button>
+        </div>
+    </nav>
+    <header class="d-hero">
+        <a class="d-back" href="../index.html#projects">← All projects</a>
+        <div class="d-meta">02 — 2D game </div>
+        <h1 class="d-title">HangMan GO!</h1>
+        <p class="d-tag">A classic word game, behind the screen.</p>
+        <div class="d-actions"></div>
+    </header>
+    <main class="d-main">
+        <div class="d-visual reveal-scale"><div class="video-embed"><iframe src="https://www.youtube.com/embed/tHtHFlCDyFY?rel=0" title="HangMan GO! gameplay" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>
+        <div class="d-grid">
+            <div><section class="d-sec"><h2 class="d-h">Overview</h2><p class="about-text">HangMan GO! is a 2D indie educational video game that takes the original word-guessing game — usually played with pen and paper — and brings it behind the screen.</p><p class="about-text">Built from scratch with LÖVE2D and Lua, with sound handled through OpenAL.</p></section></div>
+            <aside class="d-side"><div class="meta-row"><span class="meta-key">Type</span><span class="meta-val">2D game</span></div>
+                <h3 class="d-h small">Built with</h3><div class="pcard-tags d-stack"><span>LÖVE2D</span><span>Lua</span><span>OpenAL</span></div></aside>
+        </div>
+    </main>
+    <a class="d-next" href="campuspredict.html" style="--n:#00A8B8"><span>Next project</span><strong>CampusPredict <i>→</i></strong></a>
+    <footer><p>© 2026 chixnotfound. All rights reserved.</p><p><a href="../index.html">Back to portfolio</a></p></footer>
+    <script src="../assets/site.js" defer></script>
+</body>
+</html>
