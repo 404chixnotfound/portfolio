@@ -12,8 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
     <script>try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="stylesheet" href="../assets/site.css" />
+    <noscript><style>[data-in]{opacity:1!important;transform:none!important;clip-path:none!important}</style></noscript>
 </head>
 <body class="detail" style="--c:#E8813A">
+    <div class="pt-cover" aria-hidden="true"><span>HangMan GO!</span></div>
     <div class="cursor" id="cursor"><div class="cursor-ring" id="cursorRing"></div><div class="cursor-dot" id="cursorDot"></div></div>
     <nav id="navbar" class="scrolled">
         <a href="../index.html" class="nav-logo">Chix<span>.</span>dev</a>
@@ -28,17 +30,19 @@
     </nav>
     <header class="d-hero">
         <a class="d-back" href="../index.html#projects">← All projects</a>
+        <div class="d-ghost" aria-hidden="true">02</div>
         <div class="d-meta">02 — 2D game </div>
-        <h1 class="d-title">HangMan GO!</h1>
+        <h1 class="d-title" aria-label="HangMan GO!"><span class="w"><span class="ch" style="--i:1">H</span><span class="ch" style="--i:2">a</span><span class="ch" style="--i:3">n</span><span class="ch" style="--i:4">g</span><span class="ch" style="--i:5">M</span><span class="ch" style="--i:6">a</span><span class="ch" style="--i:7">n</span></span> <span class="w"><span class="ch" style="--i:8">G</span><span class="ch" style="--i:9">O</span><span class="ch" style="--i:10">!</span></span></h1>
         <p class="d-tag">A classic word game, behind the screen.</p>
         <div class="d-actions"></div>
     </header>
     <main class="d-main">
-        <div class="d-visual reveal-scale"><div class="video-embed"><iframe src="https://www.youtube.com/embed/tHtHFlCDyFY?rel=0" title="HangMan GO! gameplay" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>
+        <div class="d-visual" data-in><div class="video-embed"><iframe src="https://www.youtube.com/embed/tHtHFlCDyFY?rel=0" title="HangMan GO! gameplay" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div>
         <div class="d-grid">
-            <div><section class="d-sec"><h2 class="d-h">Overview</h2><p class="about-text">HangMan GO! is a 2D indie educational video game that takes the original word-guessing game — usually played with pen and paper — and brings it behind the screen.</p><p class="about-text">Built from scratch with LÖVE2D and Lua, with sound handled through OpenAL.</p></section></div>
-            <aside class="d-side"><div class="meta-row"><span class="meta-key">Type</span><span class="meta-val">2D game</span></div>
-                <h3 class="d-h small">Built with</h3><div class="pcard-tags d-stack"><span>LÖVE2D</span><span>Lua</span><span>OpenAL</span></div></aside>
+            <div><section class="d-sec" data-in style="--d:0s"><h2 class="d-h">Overview</h2><p class="d-lead">A 2D indie educational video game that takes the classic word-guessing game — usually played with pen and paper — and brings it behind the screen.</p><p class="about-text">HangMan GO! keeps the concept of the original game: guess the hidden word one letter at a time before you run out of tries. The difference is that it now lives in a game, with the presentation and sound that come with one.</p></section><section class="d-sec" data-in style="--d:0s"><h2 class="d-h">Highlights</h2><div class="d-feat-grid"><div class="d-card"><h4>The classic, reimagined</h4><p>The familiar pen-and-paper word game, rebuilt as a proper 2D video game.</p></div><div class="d-card"><h4>Educational by design</h4><p>An indie educational game — word-guessing as a way to learn and practise.</p></div><div class="d-card"><h4>Engine & audio</h4><p>Made with LÖVE2D and Lua, with sound handled through OpenAL.</p></div></div></section></div>
+            <aside class="d-side" data-in style="--d:.15s"><h3 class="d-h small" style="margin-top:0">At a glance</h3><div class="meta-row"><span class="meta-key">Type</span><span class="meta-val">2D game</span></div><div class="meta-row"><span class="meta-key">Genre</span><span class="meta-val">Educational word game</span></div><div class="meta-row"><span class="meta-key">Engine</span><span class="meta-val">LÖVE2D</span></div><div class="meta-row"><span class="meta-key">Language</span><span class="meta-val">Lua</span></div><div class="meta-row"><span class="meta-key">Audio</span><span class="meta-val">OpenAL</span></div>
+                <h3 class="d-h small">Built with</h3><div class="pcard-tags d-stack"><span>LÖVE2D</span><span>Lua</span><span>OpenAL</span></div>
+                <h3 class="d-h small">Links</h3><div class="d-links"><a href="https://www.youtube.com/watch?v=tHtHFlCDyFY" target="_blank" rel="noopener">Watch gameplay ↗</a></div></aside>
         </div>
     </main>
     <a class="d-next" href="campuspredict.html" style="--n:#00A8B8"><span>Next project</span><strong>CampusPredict <i>→</i></strong></a>
