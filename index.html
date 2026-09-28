@@ -1227,6 +1227,59 @@
                 padding: 2rem 1.5rem;
             }
         }
+
+        /* ══ v2 upgrades ══ */
+        body::before { transform-origin: 0 50%; transform: scaleX(var(--progress, 0)); transition: transform .1s linear, opacity var(--transition-theme); }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+        .now-building { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.8rem; padding: .5rem 1rem; border: 1px solid var(--line-strong); border-radius: 30px; font-family: var(--mono); font-size: .74rem; letter-spacing: .04em; color: var(--mid); text-decoration: none; width: fit-content; animation: fadeUp .9s .58s ease both; transition: border-color .25s, color .25s, transform .25s; }
+        .now-building:hover { border-color: #0066FF; color: var(--ink); transform: translateY(-2px); }
+        .now-building b { color: var(--ink); font-weight: 400; }
+        .now-building em { font-style: normal; color: #0066FF; }
+        .pulse-dot, .live-badge::before { width: 7px; height: 7px; border-radius: 50%; background: #0066FF; box-shadow: 0 0 10px #0066FF; animation: labelBlink 1.6s ease-in-out infinite; flex-shrink: 0; }
+        .project-card::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--accent-glow), transparent 60%); }
+        .project-card:hover::before { opacity: .55; }
+        .project-card > div { position: relative; z-index: 1; }
+        .project-card.cv { --cv: #0066FF; --cv-glow: rgba(0, 102, 255, .35); }
+        [data-theme="dark"] .project-card.cv { --cv: #3d8bff; }
+        .project-card.cv::before { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--cv-glow), transparent 60%); }
+        .project-card.cv .project-num, .project-card.cv:hover .project-num { color: var(--cv); }
+        .project-card.cv:hover { border-color: var(--cv); box-shadow: 0 0 0 1.5px var(--cv), 0 20px 50px var(--cv-glow); }
+        .project-card.cv .project-link { color: var(--cv); }
+        .project-card.cv .project-features li::before { color: var(--cv); }
+        .project-tags span.cv-tag { border-color: var(--cv); color: var(--cv); }
+        .live-badge { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--cv); border: 1px solid var(--cv); padding: .2rem .6rem; border-radius: 20px; }
+        .live-badge::before { content: ''; background: var(--cv); box-shadow: 0 0 8px var(--cv); }
+        .cv-visual { height: 260px; display: flex; flex-direction: column; background: #0D0D0D; border: 1px solid var(--cv); border-radius: 8px; overflow: hidden; box-shadow: 0 0 34px var(--cv-glow); transition: transform .5s ease; }
+        .project-card:hover .cv-visual { transform: scale(1.02); }
+        .cv-bar { display: flex; align-items: center; gap: .4rem; padding: .55rem .8rem; background: #161616; border-bottom: 1px solid rgba(255,255,255,.08); }
+        .cv-bar i { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+        .cv-bar span { margin-left: .6rem; font-family: var(--mono); font-size: .68rem; color: #8a8a8a; }
+        .cv-body { position: relative; flex: 1; overflow: hidden; display: grid; place-content: center; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(0,102,255,.35), transparent 65%), linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0/28px 28px, linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0/28px 28px, #0D0D0D; }
+        .cv-body strong { display: block; font-family: var(--sans); font-weight: 800; font-size: 1.5rem; letter-spacing: -.02em; color: #fff; }
+        .cv-body small { font-family: var(--mono); font-size: .7rem; color: #3d8bff; letter-spacing: .12em; text-transform: uppercase; }
+        .cv-body img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .nav-burger { display: none; width: 38px; height: 22px; padding: 0; background: none; border: 0; position: relative; cursor: none; }
+        .nav-burger span, .nav-burger::before, .nav-burger::after { content: ''; position: absolute; left: 7px; right: 7px; height: 1.5px; background: var(--ink); transition: transform .3s, opacity .3s, top .3s; }
+        .nav-burger::before { top: 5px; } .nav-burger span { top: 10px; } .nav-burger::after { top: 15px; }
+        nav.open .nav-burger::before { top: 10px; transform: rotate(45deg); }
+        nav.open .nav-burger span { opacity: 0; }
+        nav.open .nav-burger::after { top: 10px; transform: rotate(-45deg); }
+        @media (max-width: 700px) {
+            .nav-burger { display: block; }
+            .nav-links { position: fixed; top: 0; left: 0; right: 0; padding: 5.5rem 1.5rem 2rem; flex-direction: column; gap: 1.4rem; background: var(--bg); border-bottom: 1px solid var(--line); transform: translateY(-110%); transition: transform .4s ease; z-index: -1; }
+            .nav-links a { font-size: .95rem; }
+            nav.open .nav-links { transform: none; }
+            .cv-visual { height: 220px; }
+        }
+        @media (hover: none), (pointer: coarse) {
+            body, .theme-toggle, .project-card, .form-submit, .nav-burger { cursor: auto; }
+            .cursor { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+            html { scroll-behavior: auto; }
+            .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+        }
     </style>
 </head>
 <body>
@@ -1247,6 +1300,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                 <span class="theme-toggle-thumb"></span>
             </button>
@@ -1261,6 +1315,7 @@
             // Software developer crafting clean,<br />
             purposeful software — from raw idea to innovation.
         </p>
+        <a href="https://www.creatorverse.com.ng" target="_blank" rel="noopener" class="now-building"><span class="pulse-dot"></span><span>Now building — <b>CreatorVerse NG</b></span><em>↗</em></a>
         <div class="hero-cta">
             <a href="#projects" class="btn btn-pulse">View Works →</a>
             <a href="#contact" class="btn btn-ghost">Get in Touch</a>
@@ -1311,13 +1366,36 @@
     <section id="projects">
         <div class="section-header reveal">
             <h2 class="section-heading">Projects</h2>
-            <span class="section-count">02 works</span>
+            <span class="section-count">03 works</span>
         </div>
         <div class="projects-grid">
 
+            <div class="project-card featured cv reveal-scale">
+                <div>
+                    <div class="project-num">01 — Latest <span class="live-badge">Live</span></div>
+                    <h3 class="project-title">CreatorVerse NG</h3>
+                    <p class="project-desc">A home for Nigerian creators to show what they're building — and find the people who can help finish it. Built around one idea: the project, not the profile.</p>
+                    <ul class="project-features">
+                        <li>Post the exact roles a project needs; roles close when a request is accepted.</li>
+                        <li>Discover builders by stack, skill and opportunity tags.</li>
+                        <li>Collaboration requests with real statuses and a thread per request.</li>
+                        <li>Email OTP or X sign-in, with row-level security on the database.</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span class="cv-tag">Next.js</span><span class="cv-tag">Supabase</span><span>TypeScript</span><span>Tailwind</span><span>Vercel</span>
+                    </div>
+                </div>
+                <div class="cv-visual" aria-hidden="true">
+                    <div class="cv-bar"><i></i><i></i><i></i><span>creatorverse.com.ng</span></div>
+                    <div class="cv-body"><div><strong>Build. Showcase. Collaborate.</strong><small>CreatorVerse NG</small></div>
+                        <img src="https://www.creatorverse.com.ng/og-image.jpg" alt="" loading="lazy" onerror="this.remove()"></div>
+                </div>
+                <a href="https://www.creatorverse.com.ng" target="_blank" rel="noopener" class="project-link" aria-label="Open CreatorVerse NG">↗</a>
+            </div>
+
             <div class="project-card featured reveal-scale">
                 <div>
-                    <div class="project-num">01 — Featured</div>
+                    <div class="project-num">02 — Featured</div>
                     <h3 class="project-title">HangMan GO! 2D game</h3>
                     <p class="project-desc">A 2D indie educational video game that brings the concept of the original game, which is a classic word-guessing game usually played with pen and paper, behind the screen.</p>
                     <div class="project-tags">
@@ -1330,6 +1408,8 @@
                       frameborder="0"
                       allow="autoplay; encrypted-media"
                       allowfullscreen
+                      loading="lazy"
+                      title="HangMan GO! gameplay"
                     ></iframe>
                   </div>
                 <a href="#" class="project-link">↗</a>
@@ -1337,7 +1417,7 @@
 
             <div class="project-card featured neon reveal-scale">
                 <div>
-                    <div class="project-num">02 — Featured <span class="chain-badge">⛓ Monad Testnet</span></div>
+                    <div class="project-num">03 — Featured <span class="chain-badge">⛓ Monad Testnet</span></div>
                     <h3 class="project-title">CampusPredict</h3>
                     <p class="project-desc">A decentralized prediction market for campus life — built on Monad.</p>
                     <ul class="project-features">
@@ -1401,12 +1481,15 @@
                 <div class="skill-group-title">Frontend</div>
                 <ul class="skill-list">
                     <li>React / Next.js</li>
+                    <li>TypeScript</li>
+                    <li>Tailwind CSS</li>
                     <li>Lua</li>
                 </ul>
             </div>
             <div class="skill-group">
                 <div class="skill-group-title">Backend</div>
                 <ul class="skill-list">
+                    <li>Supabase / Postgres</li>
                     <li>Lua</li>
                     <li>Python</li>
                 </ul>
@@ -1415,6 +1498,7 @@
                 <div class="skill-group-title">Infrastructure</div>
                 <ul class="skill-list">
                     <li>Docker</li>
+                    <li>Vercel</li>
                     <li class="dim">AWS / GCP</li>
                 </ul>
             </div>
@@ -1593,6 +1677,32 @@
         // ── Skill list staggered hover ripple ──
         document.querySelectorAll('.skill-list li').forEach((li, i) => {
             li.style.setProperty('--item-index', i);
+        });
+
+        // ── v2: scroll progress, mobile menu, card spotlight ──
+        const setProgress = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            html.style.setProperty('--progress', max > 0 ? Math.min(window.scrollY / max, 1) : 0);
+        };
+        window.addEventListener('scroll', setProgress, { passive: true });
+        setProgress();
+
+        const burger = document.getElementById('navBurger');
+        burger.addEventListener('click', () => {
+            const open = navbar.classList.toggle('open');
+            burger.setAttribute('aria-expanded', open);
+        });
+        navLinks.forEach(a => a.addEventListener('click', () => {
+            navbar.classList.remove('open');
+            burger.setAttribute('aria-expanded', 'false');
+        }));
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+                card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+            });
         });
 
         console.log('%c Portfolio ready %c ✦ %c Dark mode: ' + getPreferredTheme(),
