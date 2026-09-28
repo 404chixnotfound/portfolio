@@ -177,12 +177,33 @@ if (rail) {
     });
 }
 
-// ── v3: page transitions ──
+// ── v4: cinematic page transition + scroll-in ──
 document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
-    if (!a || a.target || e.metaKey || e.ctrlKey || a.origin !== location.origin) return;
-    if (!/\.html$|\/$/.test(a.pathname) || (a.pathname === location.pathname && a.hash)) return;
-    e.preventDefault(); document.body.classList.add('leaving');
-    setTimeout(() => location.href = a.href, 250);
+    if (!a || a.target || e.metaKey || e.ctrlKey || e.button || a.origin !== location.origin) return;
+    if (!/\.html$/.test(a.pathname) || a.pathname === location.pathname) return;
+    e.preventDefault();
+    const cinematic = a.matches('.pcard, .d-next');
+    if (cinematic) {
+        const cs = getComputedStyle(a);
+        const col = (cs.getPropertyValue('--c') || cs.getPropertyValue('--n')).trim();
+        const name = (a.querySelector('.pcard-title, strong') || a).textContent.replace('→', '').trim();
+        const o = document.createElement('div');
+        o.className = 'pt-out';
+        o.style.cssText = `--c:${col};--x:${e.clientX || innerWidth / 2}px;--y:${e.clientY || innerHeight / 2}px`;
+        o.innerHTML = `<span>${name}</span>`;
+        document.body.appendChild(o);
+        setTimeout(() => location.href = a.href, 900);
+    } else {
+        document.body.classList.add('leaving');
+        setTimeout(() => location.href = a.href, 250);
+    }
 });
-window.addEventListener('pageshow', () => document.body.classList.remove('leaving'));
+window.addEventListener('pageshow', () => {
+    document.body.classList.remove('leaving');
+    document.querySelectorAll('.pt-out').forEach(n => n.remove());
+});
+const inObs = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); inObs.unobserve(en.target); }
+}), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('[data-in]').forEach(n => inObs.observe(n));
