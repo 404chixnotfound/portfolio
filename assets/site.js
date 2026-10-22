@@ -1,28 +1,4 @@
 
-        // ── Custom cursor ──
-        const cursor = document.getElementById('cursor');
-        const ring = document.getElementById('cursorRing');
-        const dot = document.getElementById('cursorDot');
-        let mx = 0,
-            my = 0,
-            rx = 0,
-            ry = 0;
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX;
-            my = e.clientY;
-        });
-
-        function animateCursor() {
-            rx += (mx - rx) * 0.15;
-            ry += (my - ry) * 0.15;
-            dot.style.left = mx + 'px';
-            dot.style.top = my + 'px';
-            ring.style.left = rx + 'px';
-            ring.style.top = ry + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
         // ── Dark mode toggle ──
         const html = document.documentElement;
         const themeToggle = document.getElementById('themeToggle');
@@ -186,7 +162,8 @@ document.addEventListener('click', e => {
     const cinematic = a.matches('.pcard, .d-next');
     if (cinematic) {
         const cs = getComputedStyle(a);
-        const col = (cs.getPropertyValue('--c') || cs.getPropertyValue('--n')).trim();
+        // .d-next carries the NEXT project's colour in --n; --c would be inherited from the current page's body
+        const col = (a.matches('.d-next') ? cs.getPropertyValue('--n') : cs.getPropertyValue('--c')).trim();
         const name = (a.querySelector('.pcard-title, strong') || a).textContent.replace('→', '').trim();
         const o = document.createElement('div');
         o.className = 'pt-out';
