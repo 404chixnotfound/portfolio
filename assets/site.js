@@ -205,3 +205,23 @@ document.querySelectorAll('[data-in]').forEach(n => inObs.observe(n));
     });
     document.addEventListener('pointerdown', e => { if (e.pointerType === 'touch' && !h.contains(e.target)) off(); }, { passive: true });
 })();
+
+/* .dev letters: tap one to make it wobble */
+document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerdown', () => { l.classList.remove('wob'); void l.offsetWidth; l.classList.add('wob'); setTimeout(() => l.classList.remove('wob'), 520); }));
+
+/* Easter egg: type "jelly" anywhere (or tap the footer "care." 5x) and the page wobbles */
+(() => {
+    let buf = '', taps = 0, tt;
+    const toast = document.createElement('div'); toast.className = 'egg-toast'; toast.textContent = '🍉 you found the jelly — see project 04'; toast.setAttribute('role', 'status'); document.body.appendChild(toast);
+    const go = () => {
+        document.body.classList.add('jelly'); toast.classList.add('show');
+        setTimeout(() => document.body.classList.remove('jelly'), 3200); setTimeout(() => toast.classList.remove('show'), 3600);
+    };
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+        buf = (buf + e.key.toLowerCase()).slice(-5); if (buf === 'jelly') { buf = ''; go(); }
+    });
+    const care = document.querySelector('footer a[href="#"]');
+    if (care) care.addEventListener('click', e => { e.preventDefault(); clearTimeout(tt); tt = setTimeout(() => taps = 0, 1500); if (++taps >= 5) { taps = 0; go(); } });
+    try { console.log('%cpsst — try typing "jelly"', 'color:#D8283C;font-weight:bold'); } catch (e) {}
+})();
