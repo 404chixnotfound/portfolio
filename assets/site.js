@@ -214,7 +214,7 @@ document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerd
     let buf = '', taps = 0, tt;
     const toast = document.createElement('div'); toast.className = 'egg-toast'; toast.textContent = '🍉 you found the jelly — see project 04'; toast.setAttribute('role', 'status'); document.body.appendChild(toast);
     const go = () => {
-        document.body.classList.add('jelly'); toast.classList.add('show');
+        document.body.classList.add('jelly'); toast.classList.add('show'); document.dispatchEvent(new Event('jelly-egg'));
         setTimeout(() => document.body.classList.remove('jelly'), 3200); setTimeout(() => toast.classList.remove('show'), 3600);
     };
     document.addEventListener('keydown', e => {
@@ -224,4 +224,68 @@ document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerd
     const care = document.querySelector('footer a[href="#"]');
     if (care) care.addEventListener('click', e => { e.preventDefault(); clearTimeout(tt); tt = setTimeout(() => taps = 0, 1500); if (++taps >= 5) { taps = 0; go(); } });
     try { console.log('%cpsst — try typing "jelly"', 'color:#D8283C;font-weight:bold'); } catch (e) {}
+})();
+
+/* Sound: tiny synthesized UI sounds (no files). Starts after first interaction; mute toggle in the nav, remembered. */
+(() => {
+    let ctx = null, master = null, muted = false;
+    try { muted = localStorage.getItem('sound') === 'off'; } catch (e) {}
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    const ensure = () => {
+        if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = .5; master.connect(ctx.destination); }
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+    };
+    const tone = (f, dur = .08, type = 'sine', vol = .05, f2 = null, delay = 0) => {
+        if (muted || !ctx || ctx.state !== 'running') return;
+        const t = ctx.currentTime + delay, o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+        o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + .02);
+    };
+    const PENTA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+    const S = {
+        tick: () => tone(1200, .035, 'triangle', .025),
+        click: () => { tone(420, .07, 'square', .03, 220); },
+        up: () => { tone(520, .09, 'sine', .05, 780); tone(780, .12, 'sine', .04, 1040, .06); },
+        down: () => { tone(780, .09, 'sine', .05, 520); tone(520, .12, 'sine', .04, 390, .06); },
+        letter: k => tone(PENTA[k % PENTA.length], .22, 'sine', .06, PENTA[k % PENTA.length] * 1.01),
+        unletter: k => tone(PENTA[(3 - k) % PENTA.length] / 2, .12, 'sine', .04),
+        boing: () => { tone(180, .7, 'sine', .12, 90); tone(360, .7, 'triangle', .04, 120); for (let i = 0; i < 6; i++) tone(260 + (i % 2) * 60, .12, 'sine', .035, 200, .14 * i); },
+        on: () => { tone(660, .08, 'sine', .05); tone(990, .12, 'sine', .05, null, .07); }
+    };
+    // toggle button
+    const nav = document.querySelector('.nav-inner'), themeBtn = document.getElementById('themeToggle');
+    const btn = document.createElement('button'); btn.className = 'sound-toggle'; btn.type = 'button';
+    const paint = () => { btn.setAttribute('aria-pressed', String(!muted)); btn.setAttribute('aria-label', muted ? 'Turn sound on' : 'Turn sound off'); btn.title = muted ? 'Sound off' : 'Sound on'; btn.innerHTML = muted ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>' : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>'; };
+    paint();
+    btn.addEventListener('click', () => { ensure(); muted = !muted; try { localStorage.setItem('sound', muted ? 'off' : 'on'); } catch (e) {} paint(); if (!muted) S.on(); });
+    if (nav) nav.insertBefore(btn, themeBtn || null);
+    // unlock audio on first gesture
+    const unlock = () => { ensure(); };
+    ['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, unlock, { once: true, passive: true, capture: true }));
+    // hover ticks (mouse only, throttled)
+    let last = 0;
+    document.addEventListener('pointerover', e => {
+        if (e.pointerType !== 'mouse') return;
+        const el = e.target.closest && e.target.closest('.pcard, .btn, .contact-link, .nav-links a, .d-next, .d-cta, .skill-list li');
+        if (!el || (e.relatedTarget && el.contains(e.relatedTarget))) return;
+        const n = performance.now(); if (n - last < 70) return; last = n; S.tick();
+    }, { passive: true });
+    document.addEventListener('click', e => {
+        if (e.target.closest('#themeToggle')) { setTimeout(() => (document.documentElement.dataset.theme === 'dark' ? S.down() : S.up()), 0); return; }
+        if (e.target.closest('.sound-toggle')) return;
+        if (e.target.closest('a, button, .pcard')) S.click();
+    }, { capture: true });
+    // .dev letters
+    const hn = document.getElementById('heroName');
+    if (hn) {
+        let was = false;
+        new MutationObserver(() => {
+            const is = hn.classList.contains('is-on'); if (is === was) return; was = is;
+            for (let k = 0; k < 4; k++) setTimeout(() => (is ? S.letter(k) : S.unletter(k)), k * 70);
+        }).observe(hn, { attributes: true, attributeFilter: ['class'] });
+        hn.querySelectorAll('.hn-dev i').forEach((l, k) => { l.addEventListener('pointerenter', () => S.letter(k + 1)); l.addEventListener('pointerdown', () => S.letter(k + 2)); });
+    }
+    document.addEventListener('jelly-egg', S.boing);
 })();

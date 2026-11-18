@@ -1333,3 +1333,8 @@ body.jelly section, body.jelly footer { animation: jellyWob 1s ease-in-out 3; tr
 body.jelly section:nth-of-type(even) { animation-delay: .12s; }
 @keyframes jellyWob { 0%, 100% { transform: none; } 25% { transform: scale(1.012, .985) skewX(-.6deg); } 50% { transform: scale(.992, 1.012) skewX(.6deg); } 75% { transform: scale(1.006, .994); } }
 @media (prefers-reduced-motion: reduce) { body.jelly section, body.jelly footer { animation: none; } }
+
+/* Sound toggle */
+.sound-toggle { display: grid; place-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; transition: border-color .2s, color .2s, transform .2s; }
+.sound-toggle:hover { color: var(--accent); border-color: var(--accent); transform: scale(1.08); }
+.sound-toggle[aria-pressed="false"] { color: var(--mid); }
