@@ -232,12 +232,13 @@ document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerd
     try { muted = localStorage.getItem('sound') === 'off'; } catch (e) {}
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
     const ensure = () => {
-        if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = .5; master.connect(ctx.destination); }
-        if (ctx.state === 'suspended') ctx.resume();
+        if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = 1; master.connect(ctx.destination); }
+        if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
+        if (!ensure.primed) { ensure.primed = true; try { const b = ctx.createBuffer(1, 1, 22050), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination); s.start(0); } catch (e) {} }   // iOS unlock
         return ctx;
     };
     const tone = (f, dur = .08, type = 'sine', vol = .05, f2 = null, delay = 0) => {
-        if (muted || !ctx || ctx.state !== 'running') return;
+        if (muted || !ctx) return; if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
         const t = ctx.currentTime + delay, o = ctx.createOscillator(), g = ctx.createGain();
         o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
         g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
@@ -245,14 +246,14 @@ document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerd
     };
     const PENTA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
     const S = {
-        tick: () => tone(1200, .035, 'triangle', .025),
-        click: () => { tone(420, .07, 'square', .03, 220); },
-        up: () => { tone(520, .09, 'sine', .05, 780); tone(780, .12, 'sine', .04, 1040, .06); },
-        down: () => { tone(780, .09, 'sine', .05, 520); tone(520, .12, 'sine', .04, 390, .06); },
-        letter: k => tone(PENTA[k % PENTA.length], .22, 'sine', .06, PENTA[k % PENTA.length] * 1.01),
-        unletter: k => tone(PENTA[(3 - k) % PENTA.length] / 2, .12, 'sine', .04),
-        boing: () => { tone(180, .7, 'sine', .12, 90); tone(360, .7, 'triangle', .04, 120); for (let i = 0; i < 6; i++) tone(260 + (i % 2) * 60, .12, 'sine', .035, 200, .14 * i); },
-        on: () => { tone(660, .08, 'sine', .05); tone(990, .12, 'sine', .05, null, .07); }
+        tick: () => tone(1400, .05, 'triangle', .09),
+        click: () => { tone(420, .08, 'square', .08, 220); },
+        up: () => { tone(520, .1, 'sine', .16, 780); tone(780, .14, 'sine', .13, 1040, .07); },
+        down: () => { tone(780, .1, 'sine', .16, 520); tone(520, .14, 'sine', .13, 390, .07); },
+        letter: k => tone(PENTA[k % PENTA.length], .22, 'sine', .2, PENTA[k % PENTA.length] * 1.01),
+        unletter: k => tone(PENTA[(3 - k) % PENTA.length] / 2, .14, 'sine', .14),
+        boing: () => { tone(180, .7, 'sine', .35, 90); tone(360, .7, 'triangle', .12, 120); for (let i = 0; i < 6; i++) tone(260 + (i % 2) * 60, .12, 'sine', .1, 200, .14 * i); },
+        on: () => { tone(660, .1, 'sine', .16); tone(990, .14, 'sine', .16, null, .08); }
     };
     // toggle button
     const nav = document.querySelector('.nav-inner'), themeBtn = document.getElementById('themeToggle');
@@ -263,7 +264,7 @@ document.querySelectorAll('.hn-dev i').forEach(l => l.addEventListener('pointerd
     if (nav) nav.insertBefore(btn, themeBtn || null);
     // unlock audio on first gesture
     const unlock = () => { ensure(); };
-    ['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, unlock, { once: true, passive: true, capture: true }));
+    ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(ev => addEventListener(ev, unlock, { passive: true, capture: true }));
     // hover ticks (mouse only, throttled)
     let last = 0;
     document.addEventListener('pointerover', e => {
