@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Melon Jelly — Chix.dev</title>
+    <meta name="description" content="An interactive 3D watermelon jelly slice you can grab, stretch and wobble — a real-time soft-body simulation in WebGPU." />
+    <meta property="og:title" content="Melon Jelly — Chix.dev" /><meta property="og:description" content="An interactive 3D watermelon jelly slice you can grab, stretch and wobble — a real-time soft-body simulation in WebGPU." />
+    <meta property="og:image" content="https://www.chix-dev.name.ng/melon-jelly/og.jpg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" /><link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#D8283C" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <script>try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script>
+    <link rel="stylesheet" href="../assets/site.css" />
+    <noscript><style>[data-in]{opacity:1!important;transform:none!important;clip-path:none!important}</style></noscript>
+</head>
+<body class="detail" style="--c:#D8283C">
+    <div class="pt-cover" aria-hidden="true"><span>Melon Jelly</span></div>
+    <nav id="navbar" class="scrolled">
+        <a href="../index.html" class="nav-logo">Chix<span>.</span>dev</a>
+        <div class="nav-inner">
+            <ul class="nav-links">
+                <li><a href="../index.html#about">About</a></li><li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#skills">Skills</a></li><li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="theme-toggle-thumb"></span></button>
+        </div>
+    </nav>
+    <header class="d-hero">
+        <a class="d-back" href="../index.html#projects">← All projects</a>
+        <div class="d-ghost" aria-hidden="true">04</div>
+        <div class="d-meta">04 — WebGPU toy <span class="chain-badge">◆ Runs in your browser</span></div>
+        <h1 class="d-title" aria-label="Melon Jelly."><span class="w"><span class="ch" style="--i:1">M</span><span class="ch" style="--i:2">e</span><span class="ch" style="--i:3">l</span><span class="ch" style="--i:4">o</span><span class="ch" style="--i:5">n</span></span> <span class="w"><span class="ch" style="--i:6">J</span><span class="ch" style="--i:7">e</span><span class="ch" style="--i:8">l</span><span class="ch" style="--i:9">l</span><span class="ch" style="--i:10">y</span><span class="ch" style="--i:11">.</span></span></h1>
+        <p class="d-tag">A slice of summer. A little wobble.</p>
+        <div class="d-actions"><a class="d-cta" href="../melon-jelly/index.html" target="_blank" rel="noopener">Open the demo ↗</a></div>
+    </header>
+    <main class="d-main">
+        <div class="d-visual" data-in><img src="../melon-jelly/og.jpg" alt="Melon Jelly — translucent ruby watermelon jelly slice with a glossy green rind" loading="lazy"></div>
+        <div class="d-grid">
+            <div><section class="d-sec" data-in style="--d:0s"><h2 class="d-h">Overview</h2><p class="d-lead">A thick, translucent watermelon jelly slice you can pick up, pull, twist and drop — rendered live with WebGPU and simulated as a real soft body.</p><p class="about-text">Grab the tip, a corner, the flesh or the rind. Let go and it wobbles, then settles back to its shape. The look is aimed at expensive gummy candy shot in a studio: glossy rind, ruby flesh you can see into, and seeds suspended inside.</p></section><section class="d-sec" data-in style="--d:0s"><h2 class="d-h">How it works</h2><ol class="d-steps"><li>Simulate — a tetrahedral XPBD soft body with volume preservation and a firmer rind</li><li>Skin — a smooth render mesh is bound to the tetrahedra, with seeds riding along</li><li>Render — WGSL shaders do depth absorption, refraction, Fresnel and soft contact shadows</li><li>Interact — mouse and touch, with sliders for firmness and damping</li></ol></section><section class="d-sec" data-in style="--d:0s"><h2 class="d-h">Highlights</h2><div class="d-feat-grid"><div class="d-card"><h4>Real soft body</h4><p>Stable under hard drops and stretches, with no inversion or explosions.</p></div><div class="d-card"><h4>Genuine WebGPU</h4><p>Native WGSL pipelines, with no fake fallback renderer.</p></div><div class="d-card"><h4>Looks like candy</h4><p>Translucent flesh, pale layer, glossy striped rind and individually modeled seeds.</p></div><div class="d-card"><h4>One file</h4><p>The whole experiment is a single self-contained HTML file.</p></div></div></section></div>
+            <aside class="d-side" data-in style="--d:.15s"><h3 class="d-h small" style="margin-top:0">At a glance</h3><div class="meta-row"><span class="meta-key">Type</span><span class="meta-val">WebGPU toy</span></div><div class="meta-row"><span class="meta-key">Series</span><span class="meta-val">Material Studies No. 009</span></div><div class="meta-row"><span class="meta-key">Physics</span><span class="meta-val">XPBD, CPU</span></div><div class="meta-row"><span class="meta-key">Needs</span><span class="meta-val">A WebGPU browser</span></div>
+                <h3 class="d-h small">Built with</h3><div class="pcard-tags d-stack"><span>WebGPU</span><span>WGSL</span><span>JavaScript</span><span>XPBD</span></div>
+                <h3 class="d-h small">Links</h3><div class="d-links"><a href="../melon-jelly/index.html" target="_blank" rel="noopener">Open the demo ↗</a></div></aside>
+        </div>
+    </main>
+    <a class="d-next" href="creatorverse.html" style="--n:#0066FF"><span>Next project</span><strong>CreatorVerse NG <i>→</i></strong></a>
+    <footer><p>© 2026 chixnotfound. All rights reserved.</p><p><a href="../index.html">Back to portfolio</a></p></footer>
+    <script src="../assets/site.js" defer></script>
+</body>
+</html>
