@@ -129,7 +129,7 @@ if (rail) {
     const step = () => cards[0].getBoundingClientRect().width + 22;
     const update = () => {
         const max = rail.scrollWidth - rail.clientWidth;
-        const i = Math.min(cards.length - 1, Math.round(rail.scrollLeft / step()));
+        const i = (max > 0 && rail.scrollLeft >= max - 2) ? cards.length - 1 : Math.min(cards.length - 1, Math.round(rail.scrollLeft / step()));
         num.textContent = String(i + 1).padStart(2, '0');
         bar.style.transform = `scaleX(${Math.max(1 / cards.length, max > 0 ? (rail.scrollLeft / max) : 1)})`;
     };
@@ -184,3 +184,24 @@ const inObs = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting) { en.target.classList.add('in'); inObs.unobserve(en.target); }
 }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
 document.querySelectorAll('[data-in]').forEach(n => inObs.observe(n));
+
+/* Hero name: cursor tilt + .dev reveal (hover on mouse, tap to toggle on touch) */
+(() => {
+    const h = document.getElementById('heroName');
+    if (!h) return;
+    const main = h.querySelector('.hn-main');
+    const on = () => h.classList.add('is-on'), off = () => { h.classList.remove('is-on'); h.style.removeProperty('--rx'); h.style.removeProperty('--ry'); main.style.removeProperty('--rx'); main.style.removeProperty('--ry'); };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    h.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') on(); });
+    h.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') off(); });
+    h.addEventListener('pointermove', e => {
+        if (reduce || e.pointerType === 'touch') return;
+        const r = h.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        main.style.setProperty('--rx', (x * 14).toFixed(1) + 'deg'); main.style.setProperty('--ry', (-y * 12).toFixed(1) + 'deg');
+    });
+    h.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'touch') return;
+        e.stopPropagation(); h.classList.contains('is-on') ? off() : on();
+    });
+    document.addEventListener('pointerdown', e => { if (e.pointerType === 'touch' && !h.contains(e.target)) off(); }, { passive: true });
+})();
